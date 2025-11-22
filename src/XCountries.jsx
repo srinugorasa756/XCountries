@@ -5,20 +5,30 @@ const API_ENDPOINT = "https://xcountries-backend.labs.crio.do/all"
 
 export default function XCountries(){
     const [country, setCountry] = useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(()=>{
-        const fetchData = async () => {
+        const timer = setTimeout(()=>{
+            const fetchData = async () => {
             try {
                 const apiData = await axios.get(API_ENDPOINT);
                 console.log({apiData});
                 setCountry(apiData.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
+                setLoading(false);
+            }
+             finally{
+                setLoading(false);
             }
         }
         fetchData();
+        return ()=>clearTimeout(timer);
+        }, 2000)
     }, [])
 
     console.log({country});
+
+    if(loading) return (<h2>Loading Countries...</h2>)
 
     return(
         <div style={{display:"flex", flexWrap:"wrap", justifyContent:"center", alignItems:"center", gap:"10px"}}>
