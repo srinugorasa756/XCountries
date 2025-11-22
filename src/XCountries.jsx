@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const API_ENDPOINT = "https://xcountries-backend.labs.crio.do/all"
 
@@ -28,7 +29,14 @@ export default function XCountries(){
 
     console.log({country});
 
-    if(loading) return (<h2>Loading Countries...</h2>)
+    if (loading) {
+        return (
+            <div style={{ textAlign: "center", marginTop: "40px" }}>
+            <CircularProgress size={60} thickness={4} />
+            <h3>Loading countries...</h3>
+            </div>
+        );
+}
 
     return(
         <div style={{display:"flex", flexWrap:"wrap", justifyContent:"center", alignItems:"center", gap:"10px"}}>
