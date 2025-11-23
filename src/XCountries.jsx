@@ -10,6 +10,9 @@ export default function XCountries(){
             const fetchData = async () => {
             try {
                 const apiData = await fetch(API_ENDPOINT);
+                if (!apiData.ok) {
+                    throw new Error(`HTTP error! Status: ${apiData.status}`);
+        }
                 // console.log({apiData});
                 // setCountry(apiData.data);
                 const initData = await apiData.json();
